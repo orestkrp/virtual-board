@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, PropsWithChildren } from "react";
 import { useSelf } from "@liveblocks/react/suspense";
 import {
   DefaultMainMenu,
@@ -14,9 +14,7 @@ import { useStorageStore } from "@/hooks/use-storage-store";
 import "tldraw/tldraw.css";
 import { Loading } from "../_components/loading";
 import { Avatars } from "../_components/avatars";
-import { Info } from "../_components/info";
 import { IBoard } from "@/types/database";
-import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
