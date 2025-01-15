@@ -20,3 +20,13 @@ export type Session = {
 };
 
 export type Role = "USER" | "ADMIN";
+
+export type Meta = {
+  currentTeamId: string;
+};
+
+export type ErrorResponse = {
+  message: string;
+  error: string;
+  statusCode: number;
+};

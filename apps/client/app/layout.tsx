@@ -1,8 +1,7 @@
 import { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { ToastProvider } from "@radix-ui/react-toast";
 import { ModalProvider } from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Virtual board",
@@ -15,10 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ToastProvider>
-        <ModalProvider />
-        <body>{children}</body>
-      </ToastProvider>
+      <ModalProvider />
+      <body>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

@@ -4,6 +4,7 @@ import { FC, memo } from "react";
 import Image from "next/image";
 import { useOthersMapped } from "@liveblocks/react";
 import { useSelf } from "@liveblocks/react/suspense";
+import { UserAvatar } from "@/app/dashboard/_components/dashboard-header/user-avatar";
 
 export const Avatars: FC = memo(() => {
   const currentUser = useSelf((user) => user.info);
@@ -12,14 +13,10 @@ export const Avatars: FC = memo(() => {
   return (
     <div className="flex justify-end p-1 px-2">
       {users.map(([connectionId, info]) => {
-        return (
-          <Avatar key={connectionId} picture={info?.avatar} name={info?.name} />
-        );
+        return <UserAvatar key={connectionId} userName={info.name} />;
       })}
 
-      {currentUser && (
-        <Avatar picture={currentUser?.avatar} name={currentUser?.name} />
-      )}
+      {currentUser && <UserAvatar userName={currentUser.name} />}
     </div>
   );
 });

@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRenameModal } from "@/store/use-raname-modal";
+import { number } from "zod";
 
 const Board: FC<PropsWithChildren> = ({ children }) => {
   const id = useSelf((me) => me.id);
@@ -39,7 +40,9 @@ const Board: FC<PropsWithChildren> = ({ children }) => {
     user: { id: id || "id", color: "#ff0", name: info?.name || "josh" },
   });
 
-  if (!connectionId) {
+  console.log(connectionId);
+
+  if (typeof connectionId !== "number") {
     return <Loading />;
   }
 

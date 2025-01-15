@@ -12,7 +12,7 @@ export const createSession = async (payload: Session) => {
   const session = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime(expireDate)
     .sign(encodedKey);
 
   const cookiesFetched = await cookies();

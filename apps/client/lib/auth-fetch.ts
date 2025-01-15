@@ -7,15 +7,16 @@ export interface FetchOptions extends RequestInit {
   headers?: Record<string, string>;
 }
 
-export const authFetch = async (
+export const authFetch = async <Data>(
   url: string | URL,
   options: FetchOptions = {}
-) => {
+): Promise<Data> => {
   const session = await getSession();
 
   options.headers = {
     ...options.headers,
     Authorization: `Bearer ${session?.accessToken}`,
+    "Content-Type": "application/json",
   };
   console.log(`${BACKEND_URL}/${url}`);
   let response = await fetch(`${BACKEND_URL}/${url}`, options);
@@ -33,5 +34,5 @@ export const authFetch = async (
     }
   }
 
-  return response;
+  return await response.json();
 };

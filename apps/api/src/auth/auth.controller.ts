@@ -29,11 +29,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   async loginUser(@Req() req) {
-    return this.authService.login(
-      Number(req.user.id),
-      req.user.name,
-      req.user.role,
-    );
+    return this.authService.login(req.user.id, req.user.name, req.user.role);
   }
 
   @Public()

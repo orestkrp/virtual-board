@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
@@ -11,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import refreshConfig from './config/refresh.config';
 import { ConfigType } from '@nestjs/config';
 import { AuthJwtPayload } from 'src/types/auth-jwt-payload';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -31,27 +33,7 @@ export class AuthService {
     return await this.userService.create(createUserDTO);
   }
 
-  async validateLocalUser(email: string, password: string) {
-    const user = await this.userService.findByEmail(email);
-
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
-    const isPasswordMatched = verify(user.password, password);
-
-    if (!isPasswordMatched) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    return {
-      id: user.id,
-      name: user.name,
-      role: user.role,
-    };
-  }
-
-  async login(userId: number, username: number, role: string) {
+  async login(userId: string, username: string, role: string) {
     const { accessToken, refreshToken } = await this.generateTokens(userId);
 
     const hashedRT = await hash(refreshToken);
@@ -66,10 +48,8 @@ export class AuthService {
     };
   }
 
-  async generateTokens(userId: number) {
+  async generateTokens(userId: string) {
     const payload: AuthJwtPayload = { sub: userId };
-
-    console.log(this.refreshTokenConfig);
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
@@ -82,7 +62,24 @@ export class AuthService {
     };
   }
 
-  async validateJwtUser(userId: number) {
+  async validateLocalUser(email: string, password: string) {
+    const user: User = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+    const isMatch: boolean = await verify(user.password, password);
+    if (!isMatch) {
+      throw new BadRequestException('Password does not match');
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      role: user.role,
+    };
+  }
+
+  async validateJwtUser(userId: string) {
     const user = await this.userService.findUser(userId);
     if (!user) {
       throw new UnauthorizedException('User not found!');
@@ -91,22 +88,22 @@ export class AuthService {
     return currentUser;
   }
 
-  async validateRefreshToken(userId: number, refreshToken: string) {
+  async validateRefreshToken(userId: string, refreshToken: string) {
     const user = await this.userService.findUser(userId);
 
-    // const refreshTokenMatched = await verify(
-    //   user.hashedRefreshToken,
-    //   refreshToken,
-    // );
+    const refreshTokenMatched = await verify(
+      user.hashedRefreshToken,
+      refreshToken,
+    );
 
-    // if (!refreshTokenMatched) {
-    //   throw new UnauthorizedException('Invalid Refresh Token!');
-    // }
+    if (!refreshTokenMatched) {
+      throw new UnauthorizedException('Invalid Refresh Token!');
+    }
     const currentUser = { id: user.id };
     return currentUser;
   }
 
-  async refreshToken(userId: number) {
+  async refreshToken(userId: string) {
     const { accessToken, refreshToken } = await this.generateTokens(userId);
     const hashedRT = await hash(refreshToken);
     await this.userService.updateHashedRefreshToken(userId, hashedRT);
@@ -124,7 +121,7 @@ export class AuthService {
     return await this.userService.create(googleUser);
   }
 
-  async signOut(userId: number) {
+  async signOut(userId: string) {
     return await this.userService.updateHashedRefreshToken(userId, null);
   }
 }

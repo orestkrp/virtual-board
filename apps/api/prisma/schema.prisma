@@ -7,17 +7,46 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+model Team {
+  id      String    @id @default(uuid())
+  name    String
+  members User[]    @relation("TeamMembers")
+  boards  Board[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 model User {
-  id  Int       @id @default(autoincrement())
+  id  String       @id @default(uuid())
   email String    @unique
   name  String
   password  String
   avatar String?
   hashedRefreshToken String?
   role  Role  @default(USER)
+  orgs     Team[] @relation("TeamMembers")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Board Board[]
 }
 
-enum Role {
-  ADMIN
-  USER
+model Board {
+  id         String @id @default(uuid())
+  title      String
+  imageUrl   String?
+  teamId      String 
+  authorId   String
+
+  author       User         @relation(fields: [authorId], references: [id])
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

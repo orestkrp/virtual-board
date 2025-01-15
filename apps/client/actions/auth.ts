@@ -76,7 +76,7 @@ export async function signIn(
       accessToken: result.accessToken,
       refreshToken: result.refreshToken,
     });
-    redirect("/");
+    redirect("/dashboard");
   } else {
     return {
       message:
