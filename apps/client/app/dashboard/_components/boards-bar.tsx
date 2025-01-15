@@ -17,8 +17,15 @@ export const BoardsTopBar: FC<BoardsTopBar> = ({ activeTeamId }) => {
         <h2 className="text-2xl font-semibold">Boards in this team</h2>
         <Button
           onClick={() =>
-            createBoard(activeTeamId).then(() => {
-              toast({ title: "New boars was created" });
+            createBoard(activeTeamId).then((result) => {
+              if (result.error) {
+                toast({
+                  title: result.error,
+                  variant: "destructive",
+                });
+              } else {
+                toast({ title: "Board was created" });
+              }
             })
           }
         >

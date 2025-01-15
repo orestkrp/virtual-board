@@ -5,10 +5,15 @@ import { revalidateTag } from "next/cache";
 
 export const createBoard = async (teamId: string) => {
   const data = JSON.stringify({ title: "Untitled" });
-  await authFetch(`board/${teamId}`, {
+  const response = await authFetch<any>(`board/${teamId}`, {
     method: "POST",
     body: data,
   });
 
+  if (response.error) {
+    return { error: "Failed to create board" };
+  }
+
   revalidateTag("boards");
+  return response;
 };
