@@ -12,7 +12,6 @@ export const signOut = async () => {
   if (response.error) {
     return { error: "Failed to log out" };
   }
-  console.log(response);
   deleteSession();
   redirect("/auth/signin");
 };

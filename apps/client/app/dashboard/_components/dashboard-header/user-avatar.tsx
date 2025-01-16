@@ -1,16 +1,20 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FC } from "react";
 
 interface UserAvatarProps {
-  userName: string;
+  name?: string;
 }
 
-export const UserAvatar: FC<UserAvatarProps> = ({ userName }) => {
-  const fallback = userName
-    .split(" ")
-    .map((sub) => sub[0])
-    .join()
-    .toUpperCase();
+export const UserAvatar: FC<UserAvatarProps> = ({ name }) => {
+  const fallback = name
+    ? name
+        .split(" ")
+        .map((sub) => sub[0])
+        .join()
+        .toUpperCase()
+    : "";
 
   return (
     <Avatar>

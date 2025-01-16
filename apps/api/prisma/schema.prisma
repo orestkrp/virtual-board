@@ -17,9 +17,13 @@ model Team {
   name    String
   members User[]    @relation("TeamMembers")
   boards  Board[]
-
+  teamAdmin User    @relation(fields: [teamAdminId], references: [id])
+  teamAdminId String
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  User User[] @relation("TeamAdmin")
 }
 
 
@@ -30,11 +34,14 @@ model User {
   password  String
   avatar String?
   hashedRefreshToken String?
+  teamAdminOf Team[]  @relation("TeamAdmin")
   role  Role  @default(USER)
   orgs     Team[] @relation("TeamMembers")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Board Board[]
+
+  Team Team[]
 }
 
 model Board {

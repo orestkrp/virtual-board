@@ -4,23 +4,27 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
-import { UserDropdown } from "./user-dropdown";
+import { UserDropdown } from "../../../../components/user-dropdown";
 import { Session } from "@/lib/types";
-
-const font = Poppins({ subsets: ["latin"], weight: ["600"] });
+import { logoFont } from "@/lib/constants";
+import { InviteMembers } from "@/components/invite-members";
 
 interface DashboardHeaderProps {
   user: Session["user"];
+  currentTeamId?: string;
 }
 
-export const DashboardHeader: FC<DashboardHeaderProps> = ({ user }) => {
+export const DashboardHeader: FC<DashboardHeaderProps> = ({
+  user,
+  currentTeamId,
+}) => {
   return (
     <header className="flex justify-between items-center px-6 py-4 border-b-[1px] border-slate-200">
       <div>
-        <Link href="/">
+        <Link href="/dashboard">
           <h1
             className={cn(
-              font.className,
+              logoFont.className,
               "text-cyan-500 font-bold text-2xl capitalize"
             )}
           >
@@ -29,10 +33,7 @@ export const DashboardHeader: FC<DashboardHeaderProps> = ({ user }) => {
         </Link>
       </div>
       <div className="flex gap-4">
-        <Button>
-          <UserPlus />
-          Invite members
-        </Button>
+        {currentTeamId && <InviteMembers currentTeamId={currentTeamId} />}
         <UserDropdown user={user} />
       </div>
     </header>

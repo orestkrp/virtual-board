@@ -40,8 +40,6 @@ const Board: FC<PropsWithChildren> = ({ children }) => {
     user: { id: id || "id", color: "#ff0", name: info?.name || "josh" },
   });
 
-  console.log(connectionId);
-
   if (typeof connectionId !== "number") {
     return <Loading />;
   }

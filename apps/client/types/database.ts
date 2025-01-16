@@ -14,3 +14,20 @@ export interface IBoard {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IUser {
+  id: string;
+  email: string;
+  name: string;
+  avatar: string | null;
+  role: "USER" | "ADMIN";
+  createdAt: string;
+  updatedAt: string;
+}
+export interface ITeamDetails {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  members: IUser[];
+}

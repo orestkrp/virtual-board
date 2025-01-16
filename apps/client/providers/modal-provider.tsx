@@ -1,5 +1,6 @@
 "use client";
 
+import { InviteMembersModal } from "@/modals/invite-members-modal";
 import { RenameModal } from "@/modals/rename-modal";
 import { FC, useEffect, useState } from "react";
 
@@ -17,6 +18,7 @@ export const ModalProvider: FC = () => {
   return (
     <>
       <RenameModal />
+      <InviteMembersModal />
     </>
   );
 };

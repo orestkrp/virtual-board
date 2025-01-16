@@ -18,7 +18,6 @@ export const authFetch = async <Data>(
     Authorization: `Bearer ${session?.accessToken}`,
     "Content-Type": "application/json",
   };
-  console.log(`${BACKEND_URL}/${url}`);
   let response = await fetch(`${BACKEND_URL}/${url}`, options);
 
   if (response.status === 401) {

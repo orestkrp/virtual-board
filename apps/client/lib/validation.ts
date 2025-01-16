@@ -14,3 +14,7 @@ export const SignupFormSchema = z.object({
     message: "Password field must not be empty.",
   }),
 });
+
+export const InviteMembersSchema = z.object({
+  emails: z.array(z.string().email("Emails are not valid")),
+});

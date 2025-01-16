@@ -10,9 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FC } from "react";
-import { UserAvatar } from "./user-avatar";
+import { UserAvatar } from "../app/dashboard/_components/dashboard-header/user-avatar";
 import { signOut } from "@/actions/signout";
 import { Session } from "@/lib/types";
+import Link from "next/link";
 
 interface UserDropdownProps {
   user: Session["user"];
@@ -22,7 +23,7 @@ export const UserDropdown: FC<UserDropdownProps> = ({ user }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar userName={user.name} />
+        <UserAvatar name={user.name} />
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-72"
@@ -32,12 +33,15 @@ export const UserDropdown: FC<UserDropdownProps> = ({ user }) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/settings/user"> User Settings</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Invite members</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/settings/team"> Team</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
