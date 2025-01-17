@@ -11,7 +11,7 @@ export const createTeam = async (name: string) => {
   });
 
   if (response.error) {
-    return { error: "Failed to create team" };
+    return { error: "Failed trename boardo create team" };
   }
 
   revalidateTag("teams");

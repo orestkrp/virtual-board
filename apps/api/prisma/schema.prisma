@@ -13,47 +13,58 @@ enum Role {
 }
 
 model Team {
-  id      String    @id @default(uuid())
-  name    String
-  members User[]    @relation("TeamMembers")
-  boards  Board[]
-  teamAdmin User    @relation(fields: [teamAdminId], references: [id])
+  id          String  @id @default(uuid())
+  name        String
+  members     User[]  @relation("TeamMembers")
+  boards      Board[]
+  teamAdmin   User    @relation(fields: [teamAdminId], references: [id])
   teamAdminId String
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  User User[] @relation("TeamAdmin")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  User        User[] @relation("TeamAdmin")
 }
 
-
 model User {
-  id  String       @id @default(uuid())
-  email String    @unique
-  name  String
-  password  String
-  avatar String?
+  id                 String       @id @default(uuid())
+  email              String       @unique
+  name               String
+  password           String
+  avatar             String?
   hashedRefreshToken String?
-  teamAdminOf Team[]  @relation("TeamAdmin")
-  role  Role  @default(USER)
-  orgs     Team[] @relation("TeamMembers")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Board Board[]
-
-  Team Team[]
+  teamAdminOf        Team[]       @relation("TeamAdmin")
+  role               Role         @default(USER)
+  orgs               Team[]       @relation("TeamMembers")
+  favoritedBoards    FavoriteBoard[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  Board              Board[]
+  Team               Team[]
 }
 
 model Board {
-  id         String @id @default(uuid())
+  id         String     @id @default(uuid())
   title      String
   imageUrl   String?
-  teamId      String 
+  teamId     String
   authorId   String
 
-  author       User         @relation(fields: [authorId], references: [id])
-  team Team @relation(fields: [teamId], references: [id])
+  author     User       @relation(fields: [authorId], references: [id])
+  team       Team       @relation(fields: [teamId], references: [id])
+  favorites  FavoriteBoard[]
+
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model FavoriteBoard {
+  id        String @id @default(uuid())
+  userId    String 
+  boardId   String
+
+  user      User   @relation(fields: [userId], references: [id])
+  board     Board  @relation(fields: [boardId], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

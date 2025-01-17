@@ -9,6 +9,7 @@ import { ClipboardPlus, Users } from "lucide-react";
 
 const Dashboard: FC = async () => {
   const currentTeamId = await getCurrentTeam();
+
   if (!currentTeamId) {
     return <EmptyState icon={Users} message="No team selected" />;
   }

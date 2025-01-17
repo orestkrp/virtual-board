@@ -9,19 +9,6 @@ export const encodedKey = new TextEncoder().encode(secretKey);
 
 export const logoFont = Poppins({ subsets: ["latin"], weight: ["600"] });
 
-export const dashboardSidebarItems = [
-  {
-    title: "Home",
-    url: "/dashboard",
-    icon: Home,
-  },
-  {
-    title: "Favorites",
-    url: "/dashboard?favorites=true",
-    icon: Star,
-  },
-];
-
 export const settingsSidebarItems = [
   {
     title: "User",

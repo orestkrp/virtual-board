@@ -6,13 +6,10 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { settingsSidebarItems } from "@/lib/constants";
 import { ITeam } from "@/types/database";
 import { FC } from "react";
+import { SettingsSidebarMenu } from "./settings-sidebar-menu";
 
 interface SettingsSidebarProps {
   teams: ITeam[];
@@ -32,18 +29,7 @@ export const SettingsSidebar: FC<SettingsSidebarProps> = ({
         <SidebarGroup>
           <SidebarGroupLabel>Settings</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {settingsSidebarItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <SettingsSidebarMenu />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

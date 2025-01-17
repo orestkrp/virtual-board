@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRenameModal } from "@/store/use-raname-modal";
-import { number } from "zod";
 
 const Board: FC<PropsWithChildren> = ({ children }) => {
   const id = useSelf((me) => me.id);
@@ -33,6 +32,7 @@ const Board: FC<PropsWithChildren> = ({ children }) => {
     createdAt: new Date(Date.now()).toDateString(),
     imageUrl: null,
     teamId: "sf",
+    isFavorite: false,
     authorId: "as",
   };
 

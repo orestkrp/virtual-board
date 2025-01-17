@@ -7,7 +7,11 @@ import { ITeam } from "@/types/database";
 import { getSession } from "@/lib/session";
 import { getCurrentTeam } from "@/actions/meta";
 
-const DashbaordLayout: FC<PropsWithChildren> = async ({ children }) => {
+interface DashbaordLayoutProps {}
+
+const DashbaordLayout: FC<PropsWithChildren<DashbaordLayoutProps>> = async ({
+  children,
+}) => {
   const session = await getSession();
   const currentTeamId = await getCurrentTeam();
   if (!session) {

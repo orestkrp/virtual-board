@@ -5,15 +5,12 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { FC } from "react";
 import { TeamSwitcher } from "./team-switcher";
-import { dashboardSidebarItems } from "@/lib/constants";
 import { ITeam } from "@/types/database";
 import { getCurrentTeam } from "@/actions/meta";
+import { DashboardSidebarMenu } from "./dashboard-sidebar-menu";
 
 interface DashboardSidebarProps {
   teams: ITeam[];
@@ -23,6 +20,7 @@ export const DashboardSidebar: FC<DashboardSidebarProps> = async ({
   teams,
 }) => {
   const currentTeamId = await getCurrentTeam();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -32,18 +30,7 @@ export const DashboardSidebar: FC<DashboardSidebarProps> = async ({
         <SidebarGroup>
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {dashboardSidebarItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <DashboardSidebarMenu />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

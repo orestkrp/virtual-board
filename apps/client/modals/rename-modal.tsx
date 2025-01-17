@@ -14,10 +14,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRenameModal } from "@/store/use-raname-modal";
+import { renameBoard } from "@/actions/rename-board";
+import { useToast } from "@/hooks/use-toast";
 
 export const RenameModal: FC = () => {
   const { isOpen, onClose, initialValues } = useRenameModal();
   const [title, setTitle] = useState(initialValues.title);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     setTitle(initialValues.title);
@@ -25,6 +29,16 @@ export const RenameModal: FC = () => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    renameBoard(title, initialValues.id).then((result) => {
+      if (result.error) {
+        toast({
+          title: result.error,
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "Board was renamed" });
+      }
+    });
   };
 
   return (

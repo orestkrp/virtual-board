@@ -15,6 +15,8 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ConfirmModal } from "./confirm-modal";
+import { useRenameModal } from "@/store/use-raname-modal";
+import { deleteBoard } from "@/actions/delete-board";
 
 interface ActionsProps {
   side?: DropdownMenuContentProps["side"];
@@ -30,8 +32,8 @@ export const Actions: FC<PropsWithChildren<ActionsProps>> = ({
   sideOffset,
   title,
 }) => {
-  const router = useRouter();
   const { toast } = useToast();
+  const { onOpen } = useRenameModal();
 
   const onCopyLink = () => {
     navigator.clipboard
@@ -49,9 +51,22 @@ export const Actions: FC<PropsWithChildren<ActionsProps>> = ({
       });
   };
 
-  const onDelete = () => {};
+  const onDelete = () => {
+    deleteBoard(id).then((result) => {
+      if (result.error) {
+        toast({
+          title: result.error,
+          variant: "destructive",
+        });
+      } else {
+        toast({ title: "Board was deleted" });
+      }
+    });
+  };
 
-  const onRename = () => {};
+  const onRename = () => {
+    onOpen(id, title);
+  };
 
   return (
     <DropdownMenu>

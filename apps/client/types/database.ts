@@ -13,6 +13,7 @@ export interface IBoard {
   authorId: string;
   createdAt: string;
   updatedAt: string;
+  isFavorite: boolean;
 }
 
 export interface IUser {
