@@ -31,4 +31,5 @@ export interface ITeamDetails {
   createdAt: string;
   updatedAt: string;
   members: IUser[];
+  boards: IBoard[];
 }

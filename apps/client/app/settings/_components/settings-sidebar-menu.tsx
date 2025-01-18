@@ -11,7 +11,6 @@ import { FC } from "react";
 
 export const SettingsSidebarMenu: FC = () => {
   const path = usePathname();
-  console.log(path);
 
   const settingsSidebarItems = [
     {

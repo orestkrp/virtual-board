@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MembersTable } from "./_components/members-tab";
 import { FC } from "react";
 import { authFetch } from "@/lib/auth-fetch";
 import { Loading } from "@/app/board/_components/loading";
@@ -7,6 +6,8 @@ import { getCurrentTeam } from "@/actions/meta";
 import { EmptyState } from "@/app/dashboard/_components/empty-state";
 import { UserMinus } from "lucide-react";
 import { ITeamDetails } from "@/types/database";
+import { TeamProfile } from "./_components/team-profile";
+import { TeamMembers } from "./_components/team-members";
 
 const Team: FC = async () => {
   const currentTeamId = await getCurrentTeam();
@@ -34,10 +35,10 @@ const Team: FC = async () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="profile" className="p-6">
-        Profile
+        <TeamProfile teamDetails={teamDetails} />
       </TabsContent>
       <TabsContent value="members" className="p-6">
-        <MembersTable
+        <TeamMembers
           members={teamDetails.members}
           currentTeamId={currentTeamId}
         />

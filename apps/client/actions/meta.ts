@@ -15,3 +15,9 @@ export const getCurrentTeam = async () => {
 
   return cookiesFetched.get("currentTeam")?.value;
 };
+
+export const deleteCurrentTeam = async () => {
+  const cookiesFetched = await cookies();
+
+  return cookiesFetched.delete("currentTeam");
+};

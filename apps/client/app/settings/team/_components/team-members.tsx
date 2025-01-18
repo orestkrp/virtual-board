@@ -42,12 +42,12 @@ export type TabRow = {
   role: "member" | "admin";
 };
 
-interface MembersTableProps {
+interface TeamMembersProps {
   members: IUser[];
   currentTeamId: string;
 }
 
-export const MembersTable: FC<MembersTableProps> = ({
+export const TeamMembers: FC<TeamMembersProps> = ({
   members,
   currentTeamId,
 }) => {

@@ -51,7 +51,7 @@ model Board {
   authorId   String
 
   author     User       @relation(fields: [authorId], references: [id])
-  team       Team       @relation(fields: [teamId], references: [id])
+  team       Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
   favorites  FavoriteBoard[]
 
   createdAt  DateTime   @default(now())
@@ -64,7 +64,7 @@ model FavoriteBoard {
   boardId   String
 
   user      User   @relation(fields: [userId], references: [id])
-  board     Board  @relation(fields: [boardId], references: [id])
+  board     Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
