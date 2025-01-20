@@ -14,7 +14,7 @@ const Dashboard: FC = async () => {
     return <EmptyState icon={Users} message="No team selected" />;
   }
 
-  const boards = await authFetch<IBoard[]>(`board/${currentTeamId}`, {
+  const boards = await authFetch<IBoard[]>(`board/team/${currentTeamId}`, {
     method: "GET",
     next: { tags: ["teams"] },
   });

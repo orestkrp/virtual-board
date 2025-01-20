@@ -11,7 +11,7 @@ export const Avatars: FC = memo(() => {
   const users = useOthersMapped((user) => user.info);
 
   return (
-    <div className="flex justify-end p-1 px-2">
+    <div className="flex justify-end p-1 px-2 gap-2">
       {users.map(([connectionId, info]) => {
         return (
           <UserAvatar

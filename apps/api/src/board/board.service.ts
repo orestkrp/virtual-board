@@ -81,6 +81,11 @@ export class BoardService {
   }
 
   async getBoard(id: string) {
-    return await this.prisma.board.findUnique({ where: { id } });
+    const board = await this.prisma.board.findUnique({ where: { id } });
+    if (!board) {
+      throw new NotFoundException('Board not found');
+    }
+
+    return board;
   }
 }

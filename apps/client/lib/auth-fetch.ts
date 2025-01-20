@@ -1,4 +1,3 @@
-"use server";
 import { refreshToken } from "@/actions/auth";
 import { getSession } from "./session";
 import { BACKEND_URL } from "./constants";
@@ -15,6 +14,7 @@ export const authFetch = async <Data>(
 
   options.headers = {
     Authorization: `Bearer ${session?.accessToken}`,
+    ...options.headers,
   };
 
   let response;

@@ -16,14 +16,13 @@ import { RenameBoardDTO } from './dto/rename-baord.dto';
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
-  @Get(':teamId')
+  @Get('team/:teamId')
   async findTeamBoards(@Param('teamId') teamId: string, @Req() req) {
     return await this.boardService.getTeamBoards(teamId, req.user.id);
   }
-
   @Get(':id')
   async getBoard(@Param('id') id: string) {
-    return this.boardService.getBoard(id);
+    return await this.boardService.getBoard(id);
   }
 
   @Post(':id/fovorite')

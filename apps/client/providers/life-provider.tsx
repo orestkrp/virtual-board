@@ -11,16 +11,14 @@ import { FC, PropsWithChildren } from "react";
 
 interface LifeProviderProps {
   roomId: string;
-  publicApiKey: string;
 }
 
 export const LifeProvider: FC<PropsWithChildren<LifeProviderProps>> = ({
   children,
   roomId,
-  publicApiKey,
 }) => {
   return (
-    <LiveblocksProvider publicApiKey={publicApiKey} throttle={16}>
+    <LiveblocksProvider authEndpoint="/api/liveblocks-auth" throttle={16}>
       <RoomProvider
         id={roomId}
         initialPresence={{
