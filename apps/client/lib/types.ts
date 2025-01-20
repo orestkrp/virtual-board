@@ -1,4 +1,4 @@
-export type FormState =
+export type AuthFormState =
   | {
       error?: {
         name?: string[];
@@ -30,3 +30,23 @@ export type ErrorResponse = {
   error: string;
   statusCode: number;
 };
+
+export type ChangeEmailFormState =
+  | {
+      error?: {
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
+
+export type ChangePasswordFormState =
+  | {
+      error?: {
+        password?: string[];
+        newPassword?: string[];
+      };
+      message?: string;
+    }
+  | undefined;

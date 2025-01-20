@@ -20,11 +20,13 @@ export interface IUser {
   id: string;
   email: string;
   name: string;
+  isExternal: boolean;
   avatar: string | null;
   role: "USER" | "ADMIN";
   createdAt: string;
   updatedAt: string;
 }
+
 export interface ITeamDetails {
   id: string;
   name: string;

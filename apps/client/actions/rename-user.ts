@@ -1,11 +1,12 @@
 "use server";
 
 import { authFetch } from "@/lib/auth-fetch";
+import { updateSessionUser } from "@/lib/session";
 import { revalidateTag } from "next/cache";
 
-export const renameTeam = async (id: string, name: string) => {
+export const renameUser = async (name: string) => {
   const data = JSON.stringify({ name });
-  const response = await authFetch<any>(`team/${id}/name`, {
+  const response = await authFetch<any>(`user/name`, {
     method: "PUT",
     body: data,
     headers: { "Content-Type": "application/json" },
@@ -15,6 +16,7 @@ export const renameTeam = async (id: string, name: string) => {
     return { error: "Failed to rename team" };
   }
 
-  revalidateTag("teams");
+  revalidateTag("user");
+  updateSessionUser(name);
   return response;
 };

@@ -11,6 +11,7 @@ export const inviteMembers = async (
   const response = await authFetch<any>(`team/${teamId}/members`, {
     method: "POST",
     body: data,
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.error) {

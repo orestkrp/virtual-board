@@ -3,14 +3,14 @@
 import { BACKEND_URL } from "@/lib/constants";
 
 import { redirect } from "next/navigation";
-import { FormState } from "@/lib/types";
+import { AuthFormState } from "@/lib/types";
 import { LoginFormSchema, SignupFormSchema } from "@/lib/validation";
-import { createSession, getCookie, updateSession } from "@/lib/session";
+import { createSession, updateSession } from "@/lib/session";
 
 export async function signUp(
-  state: FormState,
+  state: AuthFormState,
   formData: FormData
-): Promise<FormState> {
+): Promise<AuthFormState> {
   const validationFields = SignupFormSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
@@ -32,19 +32,18 @@ export async function signUp(
   });
   if (response.ok) {
     redirect("/auth/signin");
-  } else
+  } else {
+    const res = await response.json();
     return {
-      message:
-        response.status === 409
-          ? "The user is already existed!"
-          : response.statusText,
+      message: res.message,
     };
+  }
 }
 
-export async function signIn(
-  state: FormState,
+export const signIn = async (
+  state: AuthFormState,
   formData: FormData
-): Promise<FormState> {
+): Promise<AuthFormState> => {
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -78,12 +77,12 @@ export async function signIn(
     });
     redirect("/dashboard");
   } else {
+    const res = await response.json();
     return {
-      message:
-        response.status === 401 ? "Invalid Credentials!" : response.statusText,
+      message: res.message,
     };
   }
-}
+};
 
 export const refreshToken = async (oldRefreshToken: string) => {
   try {

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { LocalStrategy } from './strategies/local.stratedy';
@@ -15,11 +15,12 @@ import { GoogleStrategy } from './strategies/google.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles/roles.guard';
+import { AppModule } from 'src/app.module';
 
 @Module({
   imports: [
     PassportModule,
-    UserModule,
+    forwardRef(() => UserModule),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(refreshConfig),
@@ -41,5 +42,6 @@ import { RolesGuard } from './guards/roles/roles.guard';
       useClass: RolesGuard,
     },
   ],
+  exports: [AuthService],
 })
 export class AuthModule {}

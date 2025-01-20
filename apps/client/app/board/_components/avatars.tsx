@@ -13,10 +13,18 @@ export const Avatars: FC = memo(() => {
   return (
     <div className="flex justify-end p-1 px-2">
       {users.map(([connectionId, info]) => {
-        return <UserAvatar key={connectionId} name={info.name} />;
+        return (
+          <UserAvatar
+            key={connectionId}
+            name={info.name}
+            avatar={info.avatar}
+          />
+        );
       })}
 
-      {currentUser && <UserAvatar name={currentUser.name} />}
+      {currentUser && (
+        <UserAvatar name={currentUser.name} avatar={currentUser.avatar} />
+      )}
     </div>
   );
 });

@@ -19,19 +19,17 @@ export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
   const { toast } = useToast();
   return (
     <div className="flex flex-col">
-      <div className="flex">
-        <DebouncedInput
-          name="team_name"
-          placeholder="Write new team name"
-          sendRequest={async (value: string) => {
-            return await renameTeam(teamDetails.id, value);
-          }}
-          label="Team name"
-          type="text"
-          value={teamDetails.name}
-          className="max-w-80 text-l font-semibold"
-        />
-      </div>
+      <DebouncedInput
+        name="team_name"
+        placeholder="Write new team name"
+        sendRequest={async (value: string) => {
+          return await renameTeam(teamDetails.id, value);
+        }}
+        label="Team name"
+        type="text"
+        value={teamDetails.name}
+        className="max-w-80 text-l font-semibold"
+      />
       <div>
         <h2 className="my-4 text-xl font-bold">Team details</h2>
         <Separator />
@@ -53,7 +51,6 @@ export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
           header="Delete Team?"
           description="Whis will delete all the boards of this team and all of it contents."
           onConfirm={async () => {
-            await deleteCurrentTeam();
             await deleteTeam(teamDetails.id).then(async (result) => {
               if (result.error) {
                 toast({
@@ -62,6 +59,7 @@ export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
                 });
               } else {
                 toast({ title: "Team was deleted" });
+                await deleteCurrentTeam();
               }
             });
           }}

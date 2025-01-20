@@ -21,3 +21,5 @@ export const settingsSidebarItems = [
     icon: Users,
   },
 ];
+
+export const AVATAR_BG = "#0341fc";

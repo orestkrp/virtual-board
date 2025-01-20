@@ -3,15 +3,15 @@
 import { authFetch } from "@/lib/auth-fetch";
 import { revalidateTag } from "next/cache";
 import { setCurrentTeam } from "./meta";
-import { ITeam } from "@/types/database";
 
 export const createTeam = async (name: string) => {
   const data = JSON.stringify({ name: name });
 
   try {
-    const response = await authFetch<ITeam>("team", {
+    const response = await authFetch<any>("team", {
       method: "POST",
       body: data,
+      headers: { "Content-Type": "application/json" },
     });
 
     revalidateTag("teams");
@@ -20,6 +20,6 @@ export const createTeam = async (name: string) => {
 
     return response;
   } catch (e) {
-    return { error: "Failed trename boardo create team" };
+    return { error: "Failed to create team" };
   }
 };

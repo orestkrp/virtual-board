@@ -12,7 +12,9 @@ export const SignInForm = () => {
     <form action={action}>
       <div className="flex flex-col gap-2">
         {state?.message && (
-          <p className="text-sm text-red-500">{state.message}</p>
+          <p className="text-sm mt-2 text-center text-red-500">
+            {state.message}
+          </p>
         )}
         <div>
           <Label htmlFor="email">Email</Label>

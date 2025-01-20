@@ -8,6 +8,7 @@ export const createBoard = async (teamId: string) => {
   const response = await authFetch<any>(`board/${teamId}`, {
     method: "POST",
     body: data,
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.error) {

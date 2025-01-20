@@ -8,9 +8,10 @@ import { UserDropdown } from "../../../../components/user-dropdown";
 import { Session } from "@/lib/types";
 import { logoFont } from "@/lib/constants";
 import { InviteMembers } from "@/components/invite-members";
+import { IUser } from "@/types/database";
 
 interface DashboardHeaderProps {
-  user: Session["user"];
+  user: IUser;
   currentTeamId?: string;
 }
 

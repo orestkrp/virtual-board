@@ -76,3 +76,23 @@ export async function updateSession({
 
   await createSession(newPayload);
 }
+
+export async function updateSessionUser(name: string) {
+  const cookiesFetched = await cookies();
+  const cookie = cookiesFetched.get("session")?.value;
+  if (!cookie) return null;
+
+  const { payload } = await jwtVerify<Session>(cookie, encodedKey);
+
+  if (!payload) throw new Error("Session not found");
+
+  const newPayload: Session = {
+    ...payload,
+    user: {
+      ...payload.user,
+      name: name,
+    },
+  };
+
+  await createSession(newPayload);
+}

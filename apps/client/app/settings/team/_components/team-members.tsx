@@ -82,11 +82,9 @@ export const TeamMembers: FC<TeamMembersProps> = ({
         cell: ({ row }) => (
           <div className="flex gap-3 items-center">
             <UserAvatar
-              name={
-                tabRows.find(
-                  (tabRow) => tabRow.email === (row.getValue("email") as string)
-                )?.name!
-              }
+              {...tabRows.find(
+                (tabRow) => tabRow.email === (row.getValue("email") as string)
+              )!}
             />
             <p className="lowercase"> {row.getValue("email")}</p>
           </div>

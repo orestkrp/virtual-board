@@ -8,6 +8,7 @@ export const renameBoard = async (title: string, id: string) => {
   const response = await authFetch<any>(`board/${id}/name`, {
     method: "PUT",
     body: data,
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.error) {

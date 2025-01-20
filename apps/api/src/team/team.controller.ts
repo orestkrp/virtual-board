@@ -33,17 +33,23 @@ export class TeamController {
   }
 
   @Put(':id/name')
-  async renameTeam(@Param('id') id: string, @Body() renameTeam: RenameTeamDTO) {
-    return await this.teamService.renameTeam(id, renameTeam.name);
+  async renameTeam(
+    @Param('id') id: string,
+    @Body() renameTeamDTO: RenameTeamDTO,
+  ) {
+    return await this.teamService.renameTeam(id, renameTeamDTO.name);
   }
 
   @Post(':id/members')
-  async addMembers(@Body() members: AddMembersDTO, @Param('id') id: string) {
-    return await this.teamService.addMembers(members.emails, id);
+  async addMembers(
+    @Body() addMembersDTO: AddMembersDTO,
+    @Param('id') id: string,
+  ) {
+    return await this.teamService.addMembers(addMembersDTO.emails, id);
   }
 
   @Post()
-  async createTeam(@Req() req, @Body() team: CreateTeamDTO) {
-    return await this.teamService.createTeam(team, req.user.id);
+  async createTeam(@Req() req, @Body() createTeamDTO: CreateTeamDTO) {
+    return await this.teamService.createTeam(createTeamDTO, req.user.id);
   }
 }

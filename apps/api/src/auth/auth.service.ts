@@ -13,6 +13,7 @@ import refreshConfig from './config/refresh.config';
 import { ConfigType } from '@nestjs/config';
 import { AuthJwtPayload } from 'src/types/auth-jwt-payload';
 import { User } from '@prisma/client';
+import { isExternal } from 'util/types';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
     if (isUserExists) {
       throw new ConflictException('Your email is already in use');
     }
-    return await this.userService.create(createUserDTO);
+    return await this.userService.create(createUserDTO, false);
   }
 
   async login(userId: string, username: string, role: string) {
@@ -118,7 +119,7 @@ export class AuthService {
     if (user) {
       return user;
     }
-    return await this.userService.create(googleUser);
+    return await this.userService.create(googleUser, true);
   }
 
   async signOut(userId: string) {

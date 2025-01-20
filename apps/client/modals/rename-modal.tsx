@@ -14,8 +14,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRenameModal } from "@/store/use-raname-modal";
-import { renameBoard } from "@/actions/rename-board";
 import { useToast } from "@/hooks/use-toast";
+import { renameBoard } from "@/actions/rename-board";
 
 export const RenameModal: FC = () => {
   const { isOpen, onClose, initialValues } = useRenameModal();
@@ -39,6 +39,7 @@ export const RenameModal: FC = () => {
         toast({ title: "Board was renamed" });
       }
     });
+    onClose();
   };
 
   return (

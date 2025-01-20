@@ -2,12 +2,13 @@ import { UserDropdown } from "@/components/user-dropdown";
 import { logoFont } from "@/lib/constants";
 import { Session } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { IUser } from "@/types/database";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 
 interface SettingsHeaderProps {
-  user: Session["user"];
+  user: IUser;
 }
 
 export const SettingsHeader: FC<SettingsHeaderProps> = ({ user }) => {

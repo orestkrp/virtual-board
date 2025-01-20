@@ -28,7 +28,7 @@ const Team: FC = async () => {
     <Tabs defaultValue="profile" className="w-full">
       <TabsList className="flex flex-start rounded-none">
         <TabsTrigger className="text-l font-semibold" value="profile">
-          <div>Profile</div>
+          Profile
         </TabsTrigger>
         <TabsTrigger className="text-l font-semibold" value="members">
           Members

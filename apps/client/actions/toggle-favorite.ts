@@ -6,6 +6,7 @@ import { revalidateTag } from "next/cache";
 export const toggleFavorite = async (id: string) => {
   const response = await authFetch<any>(`board/${id}/fovorite`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.error) {

@@ -17,7 +17,7 @@ model Team {
   name        String
   members     User[]  @relation("TeamMembers")
   boards      Board[]
-  teamAdmin   User    @relation(fields: [teamAdminId], references: [id])
+  teamAdmin   User    @relation(fields: [teamAdminId], references: [id], onDelete: Cascade)
   teamAdminId String
 
   createdAt   DateTime @default(now())
@@ -30,8 +30,9 @@ model User {
   id                 String       @id @default(uuid())
   email              String       @unique
   name               String
-  password           String
+  password           String?
   avatar             String?
+  isExternal Boolean
   hashedRefreshToken String?
   teamAdminOf        Team[]       @relation("TeamAdmin")
   role               Role         @default(USER)

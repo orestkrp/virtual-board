@@ -14,9 +14,7 @@ export const authFetch = async <Data>(
   const session = await getSession();
 
   options.headers = {
-    ...options.headers,
     Authorization: `Bearer ${session?.accessToken}`,
-    "Content-Type": "application/json",
   };
 
   let response;
@@ -50,10 +48,10 @@ export const authFetch = async <Data>(
   }
 
   if (!response.ok) {
-    let errorMessage = `Request failed with status ${response.status}`;
+    let errorMessage = "";
     try {
       const errorData = await response.json();
-      errorMessage += `: ${errorData?.message || "Unknown error from server"}`;
+      errorMessage += `${errorData?.message || "Unknown error from server"}`;
     } catch {
       errorMessage += ` and could not parse error response.`;
     }

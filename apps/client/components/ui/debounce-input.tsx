@@ -3,9 +3,9 @@
 import React, { useState, useCallback, FC } from "react";
 import { Input } from "@/components/ui/input";
 import debounce from "lodash.debounce";
-import { RenameTeamSchema } from "@/lib/validation";
 import { Label } from "./label";
 import { cn } from "@/lib/utils";
+import { RenameFieldSchema } from "@/lib/validation";
 
 interface DebouncedInputProps extends React.ComponentProps<"input"> {
   sendRequest: (value: string) => Promise<any>;
@@ -26,7 +26,7 @@ export const DebouncedInput: FC<DebouncedInputProps> = ({
 
   const debouncedRequest = useCallback(
     debounce((value) => {
-      const validationFields = RenameTeamSchema.safeParse({
+      const validationFields = RenameFieldSchema.safeParse({
         name: value,
       });
 
@@ -40,12 +40,12 @@ export const DebouncedInput: FC<DebouncedInputProps> = ({
         sendRequest(value).then((result) => {
           if (result.error) {
             setMessage({
-              message: "Failed to change the team name",
+              message: "Dailed to save",
               requestStatus: "failed",
             });
           } else {
             setMessage({
-              message: "Team name succesfully changed",
+              message: "Saved",
               requestStatus: "success",
             });
           }
