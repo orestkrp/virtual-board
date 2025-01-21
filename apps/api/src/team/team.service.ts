@@ -64,7 +64,19 @@ export class TeamService {
     });
   }
 
-  async deleteTeam(id: string) {
-    return await this.prisma.team.delete({ where: { id } });
+  async deleteTeam(id: string, userId: string) {
+    const team = await this.prisma.team.findUnique({ where: { id } });
+
+    if (!team) {
+      throw new NotFoundException();
+    }
+    if (team.teamAdminId === userId) {
+      return await this.prisma.team.delete({ where: { id } });
+    } else {
+      return await this.prisma.team.update({
+        where: { id },
+        data: { members: { disconnect: { id: userId } } },
+      });
+    }
   }
 }

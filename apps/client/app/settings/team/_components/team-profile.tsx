@@ -13,10 +13,12 @@ import { FC } from "react";
 
 interface TeamProfileProps {
   teamDetails: ITeamDetails;
+  userId: string;
 }
 
-export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
+export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails, userId }) => {
   const { toast } = useToast();
+  const isAdmin = teamDetails.teamAdminId === userId;
   return (
     <div className="flex flex-col">
       <DebouncedInput
@@ -48,8 +50,13 @@ export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
           By leaving the team, you will lose access to all its boards.
         </p>
         <ConfirmModal
-          header="Delete Team?"
-          description="Whis will delete all the boards of this team and all of it contents."
+          action={isAdmin ? "Delete" : "Leave"}
+          header={isAdmin ? "Delete Team?" : "Leave Team?"}
+          description={
+            isAdmin
+              ? "Whis will delete all the boards of this team and all of it contents."
+              : "Do you want leave the team"
+          }
           onConfirm={async () => {
             await deleteTeam(teamDetails.id).then(async (result) => {
               if (result.error) {
@@ -58,15 +65,23 @@ export const TeamProfile: FC<TeamProfileProps> = ({ teamDetails }) => {
                   variant: "destructive",
                 });
               } else {
-                toast({ title: "Team was deleted" });
+                toast({
+                  title: isAdmin ? "Team was deleted" : "You leaved the team",
+                });
                 await deleteCurrentTeam();
               }
             });
           }}
         >
-          <Button className="mt-5" variant="destructive">
-            Delete team
-          </Button>
+          {isAdmin ? (
+            <Button className="mt-5" variant="destructive">
+              Delete team
+            </Button>
+          ) : (
+            <Button className="mt-5" variant="secondary">
+              Leave
+            </Button>
+          )}
         </ConfirmModal>
       </div>
     </div>

@@ -34,4 +34,5 @@ export interface ITeamDetails {
   updatedAt: string;
   members: IUser[];
   boards: IBoard[];
+  teamAdminId: string;
 }

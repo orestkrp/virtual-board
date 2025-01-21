@@ -16,6 +16,7 @@ interface ConfirmModalProps {
   disabled?: boolean;
   header: string;
   description?: string;
+  action: string;
 }
 
 export const ConfirmModal: FC<PropsWithChildren<ConfirmModalProps>> = ({
@@ -24,6 +25,7 @@ export const ConfirmModal: FC<PropsWithChildren<ConfirmModalProps>> = ({
   header,
   description,
   onConfirm,
+  action,
 }) => {
   const handleConfirm = () => {
     onConfirm();
@@ -40,7 +42,7 @@ export const ConfirmModal: FC<PropsWithChildren<ConfirmModalProps>> = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction disabled={disabled} onClick={handleConfirm}>
-            Delete
+            {action}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

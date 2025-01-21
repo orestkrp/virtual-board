@@ -8,9 +8,16 @@ import { UserMinus } from "lucide-react";
 import { ITeamDetails } from "@/types/database";
 import { TeamProfile } from "./_components/team-profile";
 import { TeamMembers } from "./_components/team-members";
+import { getSession } from "@/lib/session";
 
 const Team: FC = async () => {
   const currentTeamId = await getCurrentTeam();
+
+  const session = await getSession();
+
+  if (!session) {
+    return null;
+  }
 
   if (!currentTeamId) {
     return <EmptyState icon={UserMinus} message="No team selected" />;
@@ -35,13 +42,10 @@ const Team: FC = async () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="profile" className="p-6">
-        <TeamProfile teamDetails={teamDetails} />
+        <TeamProfile teamDetails={teamDetails} userId={session.user.id} />
       </TabsContent>
       <TabsContent value="members" className="p-6">
-        <TeamMembers
-          members={teamDetails.members}
-          currentTeamId={currentTeamId}
-        />
+        <TeamMembers teamDetails={teamDetails} currentTeamId={currentTeamId} />
       </TabsContent>
     </Tabs>
   );

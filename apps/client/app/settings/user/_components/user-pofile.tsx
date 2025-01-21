@@ -98,6 +98,7 @@ export const UserProfile: FC<UserProfileProps> = ({ userDetails }) => {
       </div>
       <div>
         <ConfirmModal
+          action="Delete"
           header="Delete Team?"
           description="Whis will delete all the boards of this team and all of it contents."
           onConfirm={async () => {

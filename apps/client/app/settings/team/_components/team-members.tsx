@@ -31,7 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { InviteMembers } from "@/components/invite-members";
-import { IUser } from "@/types/database";
+import { ITeamDetails } from "@/types/database";
 import { FC, useMemo } from "react";
 import { UserAvatar } from "@/app/dashboard/_components/dashboard-header/user-avatar";
 
@@ -39,27 +39,28 @@ export type TabRow = {
   email: string;
   name: string;
   avatar: string | null;
-  role: "member" | "admin";
+  role: "member" | "team admin";
 };
 
 interface TeamMembersProps {
-  members: IUser[];
+  teamDetails: ITeamDetails;
   currentTeamId: string;
 }
 
 export const TeamMembers: FC<TeamMembersProps> = ({
-  members,
+  teamDetails,
   currentTeamId,
 }) => {
+  console.log(teamDetails);
   const tabRows: TabRow[] = useMemo(
     () =>
-      members.map(({ name, email, avatar }) => ({
+      teamDetails.members.map(({ name, email, avatar, id }) => ({
         name,
         email,
         avatar,
-        role: "member",
+        role: teamDetails.teamAdminId === id ? "team admin" : "member",
       })),
-    [members]
+    [teamDetails]
   );
 
   const columns: ColumnDef<TabRow>[] = useMemo(

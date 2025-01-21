@@ -28,8 +28,8 @@ export class TeamController {
   }
 
   @Delete(':id')
-  async deleteTeam(@Param('id') id: string) {
-    return await this.teamService.deleteTeam(id);
+  async deleteTeam(@Param('id') id: string, @Req() req) {
+    return await this.teamService.deleteTeam(id, req.user.id);
   }
 
   @Put(':id/name')
