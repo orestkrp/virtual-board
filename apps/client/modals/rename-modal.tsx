@@ -43,7 +43,7 @@ export const RenameModal: FC = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit board title</DialogTitle>

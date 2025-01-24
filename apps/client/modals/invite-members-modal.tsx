@@ -51,6 +51,7 @@ export const InviteMembersModal: FC = () => {
           });
         } else {
           toast({ title: "Member was added" });
+          onClose();
         }
       }
     );
