@@ -16,7 +16,7 @@ export const getFallback = (name: string) => {
   return name
     .split(" ")
     .map((sub) => sub[0])
-    .join()
+    .join("")
     .toUpperCase();
 };
 

@@ -67,7 +67,14 @@ export const UserProfile: FC<UserProfileProps> = ({ userDetails }) => {
               </AccordionTrigger>
             </div>
             <AccordionContent>
-              <ChangeEmailForm />
+              {userDetails.isExternal ? (
+                <p className="my-t text-l font-semibold">
+                  Tou can't change your email address as you've signed up to
+                  Birtual Board using another service
+                </p>
+              ) : (
+                <ChangeEmailForm />
+              )}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="password">
@@ -87,7 +94,7 @@ export const UserProfile: FC<UserProfileProps> = ({ userDetails }) => {
               {userDetails.isExternal ? (
                 <p className="my-t text-l font-semibold">
                   There is no password associated with this email address as
-                  you've signed up to Miro using another service
+                  you've signed up to Birtual Board using another service
                 </p>
               ) : (
                 <ChangePasswordForm />
